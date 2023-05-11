@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include <errno.h>
 #include "utils/utils.h"
 #include "utils/gen_zipf.h"
 #include "utils/cJSON.h"
@@ -93,6 +94,8 @@ namespace cache {
           }
 
           fclose(fp);
+        }else{
+          perror("open json file failed");
         }
 
         cJSON *config = cJSON_Parse(source);

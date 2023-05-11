@@ -1,8 +1,8 @@
 {
-  "workload": "../traces/syn_traces/rw37_dup0.4.txt",
+  "workload": "/home/cyf/githubDownload/AustereCache/traces/syn_traces/rw37_dup0.4.txt",
   "config": {
-    "primaryDeviceName": "./primary_device",
-    "cacheDeviceName": "./cache_device",
+    "primaryDeviceName": "/home/cyf/data/AustereCache_PrimaryDevice",
+    "cacheDeviceName": "/home/cyf/data/AustereCache_CacheDevice",
     "primarryDeviceSize": 5368709120,
     "cacheDeviceSize": 33554432,
     "workingSetSize": 134217728,

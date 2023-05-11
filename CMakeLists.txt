@@ -1,8 +1,10 @@
 cmake_minimum_required (VERSION 3.14)
 project (AustereCache)
- 
+
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
+set(CMAKE_CXX_FLAGS_RELEASE "-march=native")
+SET(CMAKE_BUILD_TYPE "Debug")
 
 # add the binary tree to the search path for include files
 # so that we will find TutorialConfig.h
