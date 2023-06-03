@@ -166,9 +166,14 @@ namespace cache {
 
   void ManageModule::updateMetadata(Chunk &chunk)
   {
-    BEGIN_TIMER();
-    MetadataModule::getInstance().update(chunk);
-    END_TIMER(update_index);
+    if(chunk.dedupResult_ == NOT_DUP){
+      BEGIN_TIMER();
+      MetadataModule::getInstance().update(chunk);
+      END_TIMER(update_index_not_dup);
+    }else{
+      BEGIN_TIMER();
+      MetadataModule::getInstance().update(chunk);
+      END_TIMER(update_index_dup);
+    }
   }
-
 }
