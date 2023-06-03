@@ -159,6 +159,13 @@ namespace cache {
           } else if (strcmp(name, "fakeIO") == 0) {
             Config::getInstance().enableFakeIO(valuell);
           }
+
+          // SHA512和ZLIB
+          else if (strcmp(name, "ZLIB") == 0) {
+            Config::getInstance().enableZLIB(valuell);
+          } else if (strcmp(name, "SHA512") == 0) {
+            Config::getInstance().enableSHA512(valuell);
+          }
         }
 
         if (Config::getInstance().isSynthenticCompressionEnabled()) {

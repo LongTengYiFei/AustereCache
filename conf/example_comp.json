@@ -26,6 +26,9 @@
 
     "directIO": 0,
     "traceReplay": 1,
-    "fakeIO": 1
+    "fakeIO": 1,
+
+    "SHA512":1,
+    "ZLIB":1
   }
 }
