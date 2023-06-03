@@ -3,7 +3,7 @@
   "config": {
     "primaryDeviceName": "/home/cyf/data/AustereCache_PrimaryDevice",
     "cacheDeviceName": "/home/cyf/data/AustereCache_CacheDevice",
-    "primarryDeviceSize": 5368709120,
+    "primaryDeviceSize": 5368709120,
     "cacheDeviceSize": 33554432,
     "workingSetSize": 134217728,
 
