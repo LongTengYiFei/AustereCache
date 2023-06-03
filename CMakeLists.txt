@@ -45,7 +45,12 @@ list(APPEND CacheLibSources
         src/metadata/cache_policies/least_reference_count.cc
         src/metadata/cache_policies/cache_policy.cc
         )
-# 首次定义后，好像会残留；
+# 清楚残留
+unset(DLRU CACHE)
+unset(DARC CACHE)
+unset(CDARC CACHE)
+unset(BUCKETDLRU CACHE)
+
 if (DLRU)
   message("使用Cache Dedup ARC Deduplication only")
   add_definitions(-DCACHE_DEDUP)
