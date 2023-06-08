@@ -140,10 +140,10 @@ namespace cache {
 
   void FPIndex::update(uint64_t fpHash, uint32_t nSubchunks, uint64_t &cachedataLocation, uint64_t &metadataLocation)
   {
-    uint32_t bucketId = fpHash >> nBitsPerKey_,
-             signature = fpHash & ((1u << nBitsPerKey_) - 1),
+    uint32_t bucketId = fpHash >> nBitsPerKey_, // 低位是前缀，剩下的高位是后缀；
+             signature = fpHash & ((1u << nBitsPerKey_) - 1), // 取低位前缀；
              nSlotsToOccupy = nSubchunks;
-
+    // FP-index, metadata region and data region. Theses three bucket slot one one map according to PAPER Figure 3. 
     uint32_t slotId = getFPBucket(bucketId)->update(signature, nSlotsToOccupy);
     cachedataLocation = computeCachedataLocation(bucketId, slotId);
     metadataLocation = computeMetadataLocation(bucketId, slotId);

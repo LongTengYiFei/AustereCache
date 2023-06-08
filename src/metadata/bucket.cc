@@ -101,18 +101,18 @@ namespace cache {
       uint32_t slotId = 0;
       nSlotsOccupied = 0;
       for ( ; slotId < nSlots_; ) {
-        if (!isValid(slotId)
+        if (!isValid(slotId) // 找到第一个符合的slotId
             || fpSignature != getKey(slotId)) {
           ++slotId;
           continue;
         }
         while (slotId < nSlots_
                && isValid(slotId)
-               && fpSignature == getKey(slotId)) {
+               && fpSignature == getKey(slotId)) { 
           ++nSlotsOccupied;
           ++slotId;
-        }
-        return slotId - nSlotsOccupied;
+        }// PAPER 3-2 每个slot都保存对应的FP-hash，算是重复保存了
+        return slotId - nSlotsOccupied; // 最后一个符合的ID减占用的slot数量既第一个符合的ID
       }
       return ~((uint32_t)0);
     }
@@ -138,7 +138,7 @@ namespace cache {
             nSlotsOccupied * Config::getInstance().getSubchunkSize()
           );
         }
-
+        // 为什么要都设置成Invalid?
         for (uint32_t _slotId = slotId;
              _slotId < slotId + nSlotsOccupied;
              ++_slotId) {

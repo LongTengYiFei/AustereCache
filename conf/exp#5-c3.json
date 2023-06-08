@@ -1,0 +1,34 @@
+{
+  "workload": "../traces/workspace/chunkSize_32K/homes_final_trace_00.txt1d",
+  "config": {
+    "primaryDeviceName": "/home/cyf/data/AustereCache_PrimaryDevice",
+    "cacheDeviceName": "/home/cyf/data/AustereCache_CacheDevice",
+    "primaryDeviceSize": 34359738368,
+    "cacheDeviceSize": 8589934592,
+    "workingSetSize": 34359738368,
+
+    "chunkSize": 32768,
+    "subchunkSize": 8192,
+    "nSlotsPerLbaBucket": 128,
+    "nSlotsPerFpBucket": 128,
+    "nBitsPerLbaSignature": 16,
+    "nBitsPerFpSignature": 16,
+    "lbaAmplifier": 4,
+
+    "syntheticCompression": 1,
+    "compactCachePolicy": 1,
+    "sketchBasedReferenceCounter": 1,
+
+    "multiThreading": 0,
+    "nThreads": 1,
+    "cacheMode": "WriteThrough",
+    "weuSize": 2097152,
+
+    "directIO": 0,
+    "traceReplay": 1,
+    "fakeIO": 1,
+
+    "SHA512":1,
+    "ZLIB":1
+  }
+}
