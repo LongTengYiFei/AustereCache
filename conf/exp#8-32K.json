@@ -1,11 +1,11 @@
 {
   "workload": "/home/cyf/data/AustereCache/traces/workspace/chunkSize_32K/homes_final_trace_00.txt1d",
   "config": {
-    "primaryDeviceName": "/home/cyf/data/AustereCache_PrimaryDevice",
+    "primaryDeviceName": "/home/cyf/dataHDD/AustereCache_PrimaryDevice",
     "cacheDeviceName": "/home/cyf/data/AustereCache_CacheDevice",
-    "primaryDeviceSize": 34359738368,
-    "cacheDeviceSize": 4294967296,
-    "workingSetSize": 34359738368,
+    "primaryDeviceSize": 1099511627776,
+    "cacheDeviceSize": 137438953472,
+    "workingSetSize": 137438953472,
 
     "chunkSize": 32768,
     "subchunkSize": 8192,
