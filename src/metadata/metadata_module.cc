@@ -147,7 +147,7 @@ namespace cache {
     if (Config::getInstance().getCacheMode() == tWriteBack) {
       DirtyList::getInstance().addLatestUpdate(chunk.addr_,
           chunk.cachedataLocation_,
-          (chunk.nSubchunks_ + 1) *
+          (chunk.nSubchunks_) *
           Config::getInstance().getSubchunkSize());
     }
 #endif
@@ -194,7 +194,7 @@ namespace cache {
     if (Config::getInstance().getCacheMode() == tWriteBack) {
       DirtyList::getInstance().addLatestUpdate(chunk.addr_,
           chunk.cachedataLocation_,
-          (chunk.nSubchunks_ + 1) *
+          (chunk.nSubchunks_) *
           Config::getInstance().getSubchunkSize());
     }
 #endif
