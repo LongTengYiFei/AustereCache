@@ -101,7 +101,7 @@ class ChristeTool {
 } tool;
 
 typedef struct req_rec_t {
-  uint64_t LBA_;
+  int64_t LBA_;
   int blockNum_;
   char rw_;
   std::vector<std::string> data_;
@@ -232,7 +232,7 @@ class TraceProcessor {
 
     uint64_t tmp = 0;
     uint64_t maxAddr = 0;
-    uint64_t lastAddr = -1LL;
+    int64_t lastAddr = -1LL;
 
     char procname[100], op_s[10], md5[40000];
     int fid, mjd, mnd;

@@ -37,7 +37,7 @@ namespace cache {
             IOModule::getInstance().read(CACHE_DEVICE, cachedataLocation, compressedData, len);
             // Decompress cached data
             memset(uncompressedData, 0, Config::getInstance().getChunkSize());
-            compressionModule_->decompress(compressedData, uncompressedData,
+            CompressionModule::getInstance().decompress(compressedData, uncompressedData,
                                            metadata.compressedLen_, Config::getInstance().getChunkSize());
           }
           IOModule::getInstance().write(PRIMARY_DEVICE, lba, uncompressedData,
@@ -82,8 +82,8 @@ namespace cache {
         } else {
           IOModule::getInstance().read(CACHE_DEVICE, cachedataLocation, compressedData, len);
           // Decompress cached data
-          memset(uncompressedData, 0, 32768);
-          compressionModule_->decompress(compressedData, uncompressedData,
+          memset(uncompressedData, 0, Config::getInstance().getChunkSize());
+          CompressionModule::getInstance().decompress(compressedData, uncompressedData,
               metadata.compressedLen_, Config::getInstance().getChunkSize());
         }
         IOModule::getInstance().write(PRIMARY_DEVICE, lba, uncompressedData,
@@ -133,8 +133,8 @@ namespace cache {
       } else {
         IOModule::getInstance().read(CACHE_DEVICE, cachedataLocation, compressedData, len);
         // Decompress cached data
-        memset(uncompressedData, 0, 32768);
-        compressionModule_->decompress(compressedData, uncompressedData,
+        memset(uncompressedData, 0, Config::getInstance().getChunkSize());
+        CompressionModule::getInstance().decompress(compressedData, uncompressedData,
             metadata.compressedLen_, Config::getInstance().getChunkSize());
       }
       for (auto lba : lbasToFlush) {

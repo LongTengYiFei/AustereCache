@@ -122,7 +122,7 @@ class InitialStateGenerator {
 
     uint64_t tmp = 0;
     uint64_t maxAddr = 0;
-    uint64_t last_oLBA = -1LL;  // a negative number specifies a new line
+    int64_t last_oLBA = -1LL;  // a negative number specifies a new line
     std::string cc = "abc|abc|abc|abc|abc|abc|abc|abc|";
 
     int cnt = 0;
