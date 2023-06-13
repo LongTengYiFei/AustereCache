@@ -21,7 +21,7 @@
 class InitialStateGenerator {
  private:
 
-  const int oldBits_ = 9;
+  const int oldBits_ = 9; // 512 Bytes
   int newBits_;
   std::set<uint64_t> addresses_;
   std::map<uint64_t, std::pair<bool, std::string>> data_;  // disabled now 
@@ -55,12 +55,15 @@ class InitialStateGenerator {
       exit(-1);
     }
 
-    char procname[100], op_s[10], md5[100000];
-    int fid, mjd, mnd;
-
+    uint64_t ts;
+    int fid;
+    char procname[100];
     uint64_t foffset;
-    uint64_t ts; 
     int len;
+    char op_s[10];
+    int mjd;
+    int mnd;
+    char md5[100000];
 
     // For loops
     int numLoops;
@@ -69,15 +72,14 @@ class InitialStateGenerator {
     myTimer(true, "processOneFile");
 
     while (fscanf(tfd, "%lu %d %s %lu %d %s %d %d %s", 
-          &ts, &fid, procname, 
-          &foffset, &len, op_s, 
-          &mjd, &mnd, md5) > 0) {
+          &ts, &fid, procname, &foffset, &len, op_s, &mjd, &mnd, md5) > 0) 
+    {
 
       if (isHomes_)
         assert(strlen(md5) % 32 == 0 && strlen(md5) / 32 == len);
       else
         assert(strlen(md5) == 32 && foffset % 8 == 0);
-
+      
       numLoops = (isHomes_) ? len : 1;
 
       for (int i = 0; i < numLoops; i++) {
