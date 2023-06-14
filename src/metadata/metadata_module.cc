@@ -101,15 +101,7 @@ namespace cache {
     }
   }
 
-  void MetadataModule::update(Chunk &chunk){
-    if(chunk.dedupResult_ == NOT_DUP){
-      updateNotDup(chunk);
-    }else{
-      updateDup(chunk);
-    }
-  }
-
-  void MetadataModule::updateNotDup(Chunk &chunk)
+  void MetadataModule::update(Chunk &chunk)
   {
     uint64_t removedFingerprintHash = ~0ull;
 
@@ -133,7 +125,7 @@ namespace cache {
       }
     }
     metaJournal_->addUpdate(chunk);
-    END_TIMER(update_index_not_dup);
+    END_TIMER(update_index);
 
     // Cases when an on-ssd metadata update is needed
     // 1. DUP_CONTENT (update lba lists in the on-ssd metadata if the lba is not in the list)
@@ -155,52 +147,4 @@ namespace cache {
       fpIndex_->dereference(removedFingerprintHash);
     }
   }
-
-  void MetadataModule::updateDup(Chunk &chunk)
-  {
-    uint64_t removedFingerprintHash = ~0ull;
-
-    BEGIN_TIMER();
-    if (chunk.lookupResult_ == HIT) {
-      fpIndex_->promote(chunk.fingerprintHash_);
-      lbaIndex_->promote(chunk.lbaHash_);
-    } else {
-      // Note that for a cache-candidate chunk, hitLBAIndex indicates both hit in the LBA index and fpHash match
-      // deduplication focus on the fingerprint part
-      if (chunk.hitLBAIndex_) {
-        lbaIndex_->promote(chunk.lbaHash_);
-      } else {
-        removedFingerprintHash = lbaIndex_->update(chunk.lbaHash_, chunk.fingerprintHash_);
-        fpIndex_->reference(chunk.fingerprintHash_);
-      }
-      if (chunk.dedupResult_ == DUP_CONTENT) {
-        fpIndex_->promote(chunk.fingerprintHash_);
-      } else {
-        fpIndex_->update(chunk.fingerprintHash_, chunk.nSubchunks_, chunk.cachedataLocation_, chunk.metadataLocation_);
-      }
-    }
-    metaJournal_->addUpdate(chunk);
-    END_TIMER(update_index_dup);
-
-    // Cases when an on-ssd metadata update is needed
-    // 1. DUP_CONTENT (update lba lists in the on-ssd metadata if the lba is not in the list)
-    // 2. NOT_DUP (write a new metadata and a new cached data)
-    if ((chunk.dedupResult_ == DUP_CONTENT && chunk.verficationResult_ != BOTH_LBA_AND_FP_VALID) ||
-        chunk.dedupResult_ == NOT_DUP) {
-      metaVerification_->update(chunk);
-    }
-
-#ifdef ACDC
-    if (Config::getInstance().getCacheMode() == tWriteBack) {
-      DirtyList::getInstance().addLatestUpdate(chunk.addr_,
-          chunk.cachedataLocation_,
-          (chunk.nSubchunks_) *
-          Config::getInstance().getSubchunkSize());
-    }
-#endif
-    if (removedFingerprintHash != ~0ull && removedFingerprintHash != chunk.fingerprintHash_) {
-      fpIndex_->dereference(removedFingerprintHash);
-    }
-  }
-
 }

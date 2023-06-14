@@ -234,6 +234,7 @@ namespace cache {
         printf("%s: Go through %lu operations, selected %lu\n", fileName, cnt, reqs_.size());
 
         fclose(f);
+        return 0;
       }
 
       void sendRequest(Request &req) {

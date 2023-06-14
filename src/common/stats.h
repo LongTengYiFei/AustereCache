@@ -62,8 +62,7 @@ struct Stats {
                 << "    Time elpased for computeFingerprint: " << _time_elapsed_fingerprinting << std::endl
                 << "    Time elpased for dedup: " << _time_elapsed_dedup << std::endl
                 << "    Time elpased for lookup: " << _time_elapsed_lookup << std::endl
-                << "    Time elpased for update_index DUP: " << _time_elapsed_update_index_dup << std::endl
-                << "    Time elpased for update_index NOT DUP: " << _time_elapsed_update_index_not_dup << std::endl
+                << "    Time elpased for update_index: " << _time_elapsed_update_index << std::endl
                 << "    Time elpased for io_ssd: " << _time_elapsed_io_ssd << std::endl
                 << "    Time elpased for io_hdd: " << _time_elapsed_io_hdd << std::endl
                 << "    Time elpased for debug: " << _time_elapsed_debug << std::endl
@@ -214,8 +213,7 @@ struct Stats {
     _(fingerprinting);
     _(dedup);
     _(lookup);
-    _(update_index_dup);
-    _(update_index_not_dup);
+    _(update_index);
     _(io_ssd);
     _(io_hdd);
     _(debug);
@@ -290,8 +288,7 @@ struct Stats {
       _(fingerprinting);
       _(dedup);
       _(lookup);
-      _(update_index_dup);
-      _(update_index_not_dup);
+      _(update_index);
       _(io_ssd);
       _(io_hdd);
       _(debug);

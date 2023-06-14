@@ -15,8 +15,6 @@ class MetadataModule {
   void dedup(Chunk &chunk);
   void lookup(Chunk &chunk);
   void update(Chunk &chunk);
-  void updateDup(Chunk &chunk);
-  void updateNotDup(Chunk &chunk);
   void dumpStats();
 
   std::shared_ptr<LBAIndex> lbaIndex_;
