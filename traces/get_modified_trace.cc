@@ -12,6 +12,11 @@
 #include<openssl/sha.h>
 #include<sys/time.h>
 #include<cmath>
+#include<iostream>
+#include <iostream>
+#include <random>
+
+using namespace std;
 
 class ChristeTool {
   public:
@@ -100,6 +105,18 @@ class ChristeTool {
   }
 } tool;
 
+class UniDisTool {
+  public:
+    UniDisTool():
+    URD(1, 2.25){
+      rng.seed(std::random_device()());
+    }
+
+    std::mt19937 rng;
+    std::uniform_real_distribution<double> URD;
+
+}udTool;
+
 typedef struct req_rec_t {
   int64_t LBA_;
   int blockNum_;
@@ -147,7 +164,8 @@ class TraceProcessor {
       if (cnt % 100000 == 0) printf("cnt=%d, addr=%lu\n", cnt, LBA);
 
       blockData_[LBA] = {std::string(s)};  
-      blockDataCompressity_[LBA] = tool.wrapped_norm(2, 0.25);
+      blockDataCompressity_[LBA] = udTool.URD(udTool.rng);
+      //blockDataCompressity_[LBA] = (double)std::max((double)1.1, tool.wrapped_norm(1, 0.25));
       for (int i = 0; i < numBlocksM1; i++) {
         fscanf(tfd, "%s", s);
         blockData_[LBA].push_back(std::string(s)); 
@@ -265,7 +283,8 @@ class TraceProcessor {
         // Initialize this address
         if (!blockData_.count(newLBA)) {
           blockData_[newLBA] = {};
-          blockDataCompressity_[newLBA] = tool.wrapped_norm(2, 0.25);
+          blockDataCompressity_[newLBA] = udTool.URD(udTool.rng);
+          //blockDataCompressity_[newLBA] = (double)std::max((double)1.1, tool.wrapped_norm(1, 0.25));
           for (int i = 0; i < numBlocksInOldBlock; i++) {
             blockData_[newLBA].push_back(cc);  
           }
@@ -280,7 +299,8 @@ class TraceProcessor {
           int i = newOffset % (1 << (newBits_ - oldBits_)) / ((1 << (newBits_ - oldBits_)) / numBlocksInOldBlock);
           // 32 is the length of MD5 value (32 characters)
           blockData_[newLBA][i] = std::string(md5 + index * 32, 32);
-          blockDataCompressity_[newLBA] = tool.wrapped_norm(2, 0.25);
+          blockDataCompressity_[newLBA] = udTool.URD(udTool.rng);
+          //blockDataCompressity_[newLBA] = (double)std::max((double)1.1, tool.wrapped_norm(1, 0.25));
         }
 
         lastReq.LBA_ = newLBA;
