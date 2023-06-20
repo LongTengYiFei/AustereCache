@@ -140,13 +140,23 @@ namespace cache {
 
   void FPIndex::update(uint64_t fpHash, uint32_t nSubchunks, uint64_t &cachedataLocation, uint64_t &metadataLocation)
   {
-    uint32_t bucketId = fpHash >> nBitsPerKey_, // 低位是前缀，剩下的高位是后缀；
-             signature = fpHash & ((1u << nBitsPerKey_) - 1), // 取低位前缀；
+    uint32_t bucketId = fpHash >> nBitsPerKey_, // 低位是prefix，剩下的高位是suffix；
+             signature = fpHash & ((1u << nBitsPerKey_) - 1), // 取低位prefix；
              nSlotsToOccupy = nSubchunks;
+    
+    uint32_t slotId;
     // FP-index, metadata region and data region. Theses three bucket slot one one map according to PAPER Figure 3. 
-    uint32_t slotId = getFPBucket(bucketId)->update(signature, nSlotsToOccupy);
+    BEGIN_TIMER();
+    slotId = getFPBucket(bucketId)->update(signature, nSlotsToOccupy);
+    END_TIMER(FPBucket_update);
+
+    BEGIN_TIMER();
     cachedataLocation = computeCachedataLocation(bucketId, slotId);
+    END_TIMER(computeCachedataLocation);
+
+    BEGIN_TIMER();
     metadataLocation = computeMetadataLocation(bucketId, slotId);
+    END_TIMER(computeMetadataLocation);
   }
 
   std::unique_ptr<std::lock_guard<std::mutex>> LBAIndex::lock(uint64_t lbaHash)

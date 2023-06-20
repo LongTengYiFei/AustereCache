@@ -68,6 +68,8 @@ namespace cache {
     {
       uint32_t slotId = 0, nSlotsAvailable = 0,
         nSlots = bucket_->getnSlots();
+
+      // 找到连续可用的slot
       for ( ; slotId < nSlots; ++slotId) {
         if (nSlotsAvailable == nSlotsToOccupy)
           break;
@@ -79,12 +81,19 @@ namespace cache {
         }
       }
 
+      // 如果连续可用的slot不够ToOccupy的，那么则逐出；
       if (nSlotsAvailable < nSlotsToOccupy) {
         slotId = 0;
         // Evict Least Recently Used slots
         for ( ; slotId < nSlots; ) {
-          if (slotId >= nSlotsToOccupy) break;
-          if (!bucket_->isValid(slotId)) { ++slotId; continue; }
+          if (slotId >= nSlotsToOccupy){
+            break;
+          }
+            
+          if (!bucket_->isValid(slotId)) { 
+            ++slotId; 
+            continue; 
+          }
 
           uint32_t key = bucket_->getKey(slotId);
           bucket_->setEvictedSignature(bucket_->getValue(slotId));
@@ -99,6 +108,7 @@ namespace cache {
         }
       }
 
+      // slotId在要么是第一阶段变化的要么是第二阶段变化的；
       return slotId - nSlotsToOccupy;
     }
 

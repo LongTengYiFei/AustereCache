@@ -63,6 +63,16 @@ struct Stats {
                 << "    Time elpased for dedup: " << _time_elapsed_dedup << std::endl
                 << "    Time elpased for lookup: " << _time_elapsed_lookup << std::endl
                 << "    Time elpased for update_index: " << _time_elapsed_update_index << std::endl
+                << "    Time elpased for update_index1: " << _time_elapsed_update_index1 << std::endl
+                << "    Time elpased for update_index2: " << _time_elapsed_update_index2 << std::endl
+                << "    Time elpased for update_index3: " << _time_elapsed_update_index3 << std::endl
+                << "    Time elpased for update_index4: " << _time_elapsed_update_index4 << std::endl
+                << "    Time elpased for update_index5: " << _time_elapsed_update_index5 << std::endl
+
+                << "    Time elpased for FPBucket_update: " << _time_elapsed_FPBucket_update << std::endl
+                << "    Time elpased for computeCachedataLocation: " << _time_elapsed_computeCachedataLocation << std::endl
+                << "    Time elpased for computeMetadataLocation: " << _time_elapsed_computeMetadataLocation << std::endl
+                
                 << "    Time elpased for io_ssd: " << _time_elapsed_io_ssd << std::endl
                 << "    Time elpased for io_hdd: " << _time_elapsed_io_hdd << std::endl
                 << "    Time elpased for debug: " << _time_elapsed_debug << std::endl
@@ -214,6 +224,16 @@ struct Stats {
     _(dedup);
     _(lookup);
     _(update_index);
+    _(update_index1);
+    _(update_index2);
+    _(update_index3);
+    _(update_index4);
+    _(update_index5);
+
+    _(FPBucket_update);
+    _(computeCachedataLocation);
+    _(computeMetadataLocation);
+
     _(io_ssd);
     _(io_hdd);
     _(debug);
@@ -289,6 +309,16 @@ struct Stats {
       _(dedup);
       _(lookup);
       _(update_index);
+      _(update_index1);
+      _(update_index2);
+      _(update_index3);
+      _(update_index4);
+      _(update_index5);
+
+      _(FPBucket_update);
+      _(computeCachedataLocation);
+      _(computeMetadataLocation);
+
       _(io_ssd);
       _(io_hdd);
       _(debug);

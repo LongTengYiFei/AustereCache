@@ -128,7 +128,11 @@ namespace cache {
     uint32_t FPBucket::update(uint64_t fpSignature, uint32_t nSlotsToOccupy)
     {
       uint32_t nSlotsOccupied = 0;
-      uint32_t slotId = lookup(fpSignature, nSlotsOccupied);
+      uint32_t slotId;
+      
+      slotId = lookup(fpSignature, nSlotsOccupied);
+      
+      // 为什么还能找到FP hash，调用这个函数的前提就是非重复块；
       if (slotId != ~((uint32_t)0)) {
         if (Config::getInstance().getCacheMode() == tWriteBack) {
           DirtyList::getInstance().addEvictedChunk(
@@ -138,6 +142,7 @@ namespace cache {
             nSlotsOccupied * Config::getInstance().getSubchunkSize()
           );
         }
+
         // 为什么要都设置成Invalid?
         for (uint32_t _slotId = slotId;
              _slotId < slotId + nSlotsOccupied;
@@ -145,15 +150,16 @@ namespace cache {
           setInvalid(_slotId);
         }
       }
-
+      
       slotId = cachePolicyExecutor_->allocate(nSlotsToOccupy);
+
       for (uint32_t _slotId = slotId;
            _slotId < slotId + nSlotsToOccupy;
            ++_slotId) {
-        setKey(_slotId, fpSignature);
+        setKey(_slotId, fpSignature); //fp-hash prefix
         setValid(_slotId);
       }
-
+      
       return slotId;
     }
 

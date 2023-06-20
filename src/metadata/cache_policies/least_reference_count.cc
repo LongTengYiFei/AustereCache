@@ -19,6 +19,8 @@ namespace cache {
       uint32_t slotId = 0, nSlotsAvailable = 0,
         nSlots = bucket_->getnSlots();
 
+      // 占update 1/4时间
+      BEGIN_TIMER();
       for (slotId = 0; slotId < nSlots; ) {
         if (!bucket_->isValid(slotId)) {
           ++slotId;
@@ -39,7 +41,9 @@ namespace cache {
 
         slotsToReferenceCounts.emplace_back(slotId_, std::make_pair(refCount, nSlotsOccupied));
       }
+      END_TIMER(update_index1);
 
+      BEGIN_TIMER();
       std::sort(slotsToReferenceCounts.begin(),
           slotsToReferenceCounts.end(),
           [](auto &left, auto &right) {
@@ -47,7 +51,10 @@ namespace cache {
           uint32_t nOccupied1 = left.second.second, nOccupied2 = right.second.second;
           return refCount1 < refCount2;
           });
+      END_TIMER(update_index2);
 
+      // 占update 3/4时间
+      BEGIN_TIMER();
       while (true) {
         // check whether there is a contiguous space
         // try to evict those zero referenced fingerprint first
@@ -82,10 +89,9 @@ namespace cache {
             (slotId - slotsToReferenceCounts[0].first) * Config::getInstance().getSubchunkSize()
           );
         }
-
- 
         slotsToReferenceCounts.erase(slotsToReferenceCounts.begin());
       }
+      END_TIMER(update_index3);
 
       return slotId - nSlotsAvailable;
     }
