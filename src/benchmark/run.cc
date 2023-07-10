@@ -32,6 +32,7 @@ struct Request {
     length_ = 0;
     isRead_ = 0;
     compressionLength_ = 0;
+    double compressibility_ = 1;
   }
 
   uint64_t address_;
@@ -39,6 +40,7 @@ struct Request {
   bool isRead_;
   uint32_t compressionLength_;
   char sha1_[42];
+  double compressibility_;
 };
 
 namespace cache {
@@ -160,11 +162,11 @@ namespace cache {
             Config::getInstance().enableFakeIO(valuell);
           }
 
-          // SHA512和ZLIB
-          else if (strcmp(name, "ZLIB") == 0) {
-            Config::getInstance().enableZLIB(valuell);
-          } else if (strcmp(name, "SHA512") == 0) {
-            Config::getInstance().enableSHA512(valuell);
+          // 选择重删 选择压缩
+          else if (strcmp(name, "SelectiveCompression") == 0) {
+            Config::getInstance().enableSC(valuell);
+          } else if (strcmp(name, "SelectiveDeduplication") == 0) {
+            Config::getInstance().enableSD(valuell);
           }
         }
 
@@ -228,6 +230,7 @@ namespace cache {
           }
 
           req.isRead_ = (op[0] == 'r' || op[0] == 'R');
+          req.compressibility_ = compressibility;
 
           reqs_.emplace_back(req);
         }
@@ -262,7 +265,7 @@ namespace cache {
         if (req.isRead_) {
           AustereCache_->read(begin, rwdata, len);
         } else {
-          AustereCache_->write(begin, rwdata, len);
+          AustereCache_->write(begin, rwdata, len, req.compressibility_);
         }
       }
 

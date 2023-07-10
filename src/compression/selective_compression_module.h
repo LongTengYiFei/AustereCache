@@ -5,18 +5,19 @@
 #include "chunking/chunk_module.h"
 
 /*
-    Chunk whose compression ratio above this threshould is considered compression unfriendly,
-    will filtered by selective compression module.
-    This threshould is same with FAST'13 Harnik.
+    Chunk whose compression ratio above this threshould is considered compression friendly,
+    the lower is unfriendly will filtered by selective compression module.
+    The threshold is some different with FAST'13 Harnik, 
+    define by original chunk size divide compressed chunk size
 */
-#define COMPRESSION_RATIO_TRESHOULD 0.8
+#define COMPRESSION_RATIO_TRESHOULD 1.5
 
 namespace cache {
 class SelectiveCompressionModule {
     SelectiveCompressionModule() = default;
     public:
         static SelectiveCompressionModule& getInstance();
-        static bool compressible(const uint8_t *uncompressedBuf);
+        bool compressible(const Chunk & chunk);
 };
 }
 

@@ -77,6 +77,8 @@ struct Chunk {
     uint32_t compressedLen_;
     uint32_t nSubchunks_; // compression level: 0, 1, 2, 3 representing 1, 2, 3, 4 * 8 KiB
 
+    double compressibility;
+
     uint8_t  fingerprint_[20];
     uint64_t lbaHash_;
     uint64_t fingerprintHash_;

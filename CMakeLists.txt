@@ -21,8 +21,10 @@ list(APPEND CacheLibSources
         src/chunking/chunk_module.cc
 
         src/deduplication/deduplication_module.cc
+        src/deduplication/selective_deduplication.cc
 
         src/compression/compression_module.cc
+        src/compression/selective_compression_module.cc
 
         src/austere_cache/austere_cache.cc
 

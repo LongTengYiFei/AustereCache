@@ -22,7 +22,7 @@ class AustereCache {
   AustereCache();
   ~AustereCache();
   void read(uint64_t addr, void *buf, uint32_t len);
-  void write(uint64_t addr, void *buf, uint32_t len);
+  void write(uint64_t addr, void *buf, uint32_t len, double cb);
   inline void resetStatistics() { stats_->reset(); }
   inline void dumpStatistics() { stats_->dump(); }
   void dumpMemoryUsage(double& vm_usage, double& resident_set)

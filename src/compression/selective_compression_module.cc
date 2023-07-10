@@ -15,9 +15,11 @@ SelectiveCompressionModule& SelectiveCompressionModule::getInstance() {
   return instance;
 }
 
-bool SelectiveCompressionModule::compressible(const uint8_t *uncompressedBuf)
+bool SelectiveCompressionModule::compressible(const Chunk & chunk)
 {
+  if(chunk.compressibility > COMPRESSION_RATIO_TRESHOULD)
     return true;
+  return false;
 }
 
 }

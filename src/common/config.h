@@ -145,9 +145,11 @@ namespace cache {
         void enableDirectIO(bool v) { enableDirectIO_ = v; }
         void enableFakeIO(bool v) { enableFakeIO_ = v; }
 
-        // 前期测试，强哈希，慢速压缩
-        void enableSHA512(bool v){}
-        void enableZLIB(bool v){}
+        // 
+        void enableSC(bool v){ enableSC_ = v; }
+        void enableSD(bool v){ enableSD_ = v; }
+        bool isSC(){ return enableSC_; }
+        bool isSD(){ return enableSD_; }
 
         void enableSynthenticCompression(bool v) { enableSynthenticCompression_ = v; }
         void enableTraceReplay(bool v) { enableTraceReplay_ = v; }
@@ -236,9 +238,9 @@ namespace cache {
         uint64_t cacheDeviceSize_;
         uint32_t weuSize_ = 0;
 
-        // SHA512, ZLIB
-        bool enableSHA512_ = false;
-        bool enableZLIB_ = false;
+        // SelectiveCompression and Selective Deduplication
+        bool enableSC_ = false;
+        bool enableSD_ = false;
 
         // Trace replay related
         bool enableDirectIO_ = false;

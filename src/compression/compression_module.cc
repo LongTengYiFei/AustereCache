@@ -1,4 +1,5 @@
 #include "compression_module.h"
+#include "selective_compression_module.h"
 #include "common/config.h"
 #include "lz4.h"
 
@@ -24,9 +25,20 @@ void CompressionModule::compress(Chunk &chunk)
       (const char*)chunk.buf_, (char*)chunk.compressedBuf_,
       chunk.len_, chunk.len_ - 1);
 #else // ACDC
-  chunk.compressedLen_ = LZ4_compress_default(
+  if(Config::getInstance().isSC()){
+      if(SelectiveCompressionModule::getInstance().compressible(chunk)){
+          chunk.compressedLen_ = LZ4_compress_default(
+          (const char*)chunk.buf_, (char*)chunk.compressedBuf_,
+          chunk.len_, chunk.len_ * 0.75);
+      }else{
+          // psedo-compressor
+          chunk.compressedLen_ = chunk.len_;
+      }
+  }else{
+      chunk.compressedLen_ = LZ4_compress_default(
       (const char*)chunk.buf_, (char*)chunk.compressedBuf_,
       chunk.len_, chunk.len_ * 0.75);
+  }
 #endif
 
   if (!Config::getInstance().isSynthenticCompressionEnabled()) {

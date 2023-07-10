@@ -53,13 +53,14 @@ namespace cache {
       }
     }
 
-    void AustereCache::write(uint64_t addr, void *buf, uint32_t len)
+    void AustereCache::write(uint64_t addr, void *buf, uint32_t len, double cb)
     {
       Stats::getInstance().setCurrentRequestType(1);
       Chunker chunker = ChunkModule::getInstance().createChunker(addr, buf, len);
       alignas(512) Chunk c;
 
       while ( chunker.next(c) ) {
+        c.compressibility = cb;
         internalWrite(c);
         c.fpBucketLock_.reset();
         c.lbaBucketLock_.reset();

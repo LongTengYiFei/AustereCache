@@ -5,3 +5,4 @@ traces/workspace
 traces/mail-*
 traces/homes.tar.gz
 traces/web-vm.tar.gz
+test/
