@@ -57,25 +57,22 @@ struct Stats {
                 << std::endl;
 
       std::cout << std::fixed << std::setprecision(0) << "Time Elapsed: " << std::endl
+                << "    Time elpased for computeFingerprint: " << _time_elapsed_fingerprinting << std::endl
                 << "    Time elpased for compression: " << _time_elapsed_compression << std::endl
                 << "    Time elpased for decompression: " << _time_elapsed_decompression << std::endl
-                << "    Time elpased for computeFingerprint: " << _time_elapsed_fingerprinting << std::endl
-                << "    Time elpased for dedup: " << _time_elapsed_dedup << std::endl
                 << "    Time elpased for lookup: " << _time_elapsed_lookup << std::endl
+                << "    Time elpased for dedup: " << _time_elapsed_dedup << std::endl
                 << "    Time elpased for update_index: " << _time_elapsed_update_index << std::endl
-                << "    Time elpased for update_index1: " << _time_elapsed_update_index1 << std::endl
-                << "    Time elpased for update_index2: " << _time_elapsed_update_index2 << std::endl
-                << "    Time elpased for update_index3: " << _time_elapsed_update_index3 << std::endl
-                << "    Time elpased for update_index4: " << _time_elapsed_update_index4 << std::endl
-                << "    Time elpased for update_index5: " << _time_elapsed_update_index5 << std::endl
-
-                << "    Time elpased for FPBucket_update: " << _time_elapsed_FPBucket_update << std::endl
-                << "    Time elpased for computeCachedataLocation: " << _time_elapsed_computeCachedataLocation << std::endl
-                << "    Time elpased for computeMetadataLocation: " << _time_elapsed_computeMetadataLocation << std::endl
-                
                 << "    Time elpased for io_ssd: " << _time_elapsed_io_ssd << std::endl
                 << "    Time elpased for io_hdd: " << _time_elapsed_io_hdd << std::endl
-                << "    Time elpased for debug: " << _time_elapsed_debug << std::endl
+
+                // << "    Time elpased for update_index(FPBucket_update): " << _time_elapsed_FPBucket_update << std::endl
+                // << "    Time elpased for update_index(computeCachedataLocation): " << _time_elapsed_computeCachedataLocation << std::endl
+                // << "    Time elpased for update_index(computeMetadataLocation): " << _time_elapsed_computeMetadataLocation << std::endl
+                // << "    Time elpased for FPBucket_update(update_index1): " << _time_elapsed_update_index1 << std::endl
+                // << "    Time elpased for FPBucket_update(update_index2): " << _time_elapsed_update_index2 << std::endl
+                // << "    Time elpased for FPBucket_update(update_index3): " << _time_elapsed_update_index3 << std::endl
+                // << "    Time elpased for debug: " << _time_elapsed_debug << std::endl
                 << std::endl;
 
       std::cout << std::setprecision(2) << "Overall Stats: " << std::endl
