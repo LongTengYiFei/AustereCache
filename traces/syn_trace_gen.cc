@@ -8,6 +8,7 @@
 #include<set>
 #include<cmath>
 #include<utility>
+#include <cstdint>
 
 uint64_t MaxAddr = 1LL * 1024 * 1024 * 1024;
 uint64_t WorkingSetSize = 256LL * 1024 * 1024;
